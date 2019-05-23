@@ -3,3 +3,8 @@
 Sign up app for Brac University Computer Club
 
 ![alt text](https://github.com/mushfiqulIslam/buccsignup/blob/master/img.png)
+
+---
+# License & copyright
+
+© Mushfiqul Islam Chowdhury, BRAC UNIVERSITY COMPUTER CLUB
