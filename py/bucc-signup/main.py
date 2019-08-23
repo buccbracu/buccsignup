@@ -14,7 +14,7 @@ class Signup:
 
         self.window_width = self.master.winfo_screenwidth()
         self.window_height = self.master.winfo_screenheight()
-        self.master.geometry("750x%d" % (self.window_height-200))
+        self.master.geometry("750x600")
 
         #Loading Right Background
         open = Image.open("images/background.png")
@@ -65,50 +65,50 @@ class Signup:
         img.place(x=440, y=80)
 
         #Creating Name label
-        labelN = Label(self.master, text="Name:", font=("Times", 16), bg="#EAF0F1")
-        labelN.place(x=340, y=200)
+        self.labelN = Label(self.master, text="Name:", font=("Times", 16), bg="#EAF0F1")
+        self.labelN.place(x=340, y=200)
 
         #Taking Name Input
         self.name =StringVar()
-        inputN = Entry(self.master,font=("Times", 16, "italic"), justify="center",width=30, textvariable=self.name)
-        inputN.place(x=340, y=230)
+        self.inputN = Entry(self.master,font=("Times", 16, "italic"), justify="center",width=30, textvariable=self.name)
+        self.inputN.place(x=340, y=230)
 
 
         #Creating ID label
-        labelN = Label(self.master, text="Student ID:", font=("serif", 16), bg="#EAF0F1")
-        labelN.place(x=340, y=280)
+        self.labelI = Label(self.master, text="Student ID:", font=("serif", 16), bg="#EAF0F1")
+        self.labelI.place(x=340, y=280)
 
         #Taking ID Input
         self.id =StringVar()
-        inputN = Entry(self.master,font=("Times", 16, "italic"), justify="center",width=30, textvariable=self.id)
-        inputN.place(x=340, y=310)
+        self.inputI = Entry(self.master,font=("Times", 16, "italic"), justify="center",width=30, textvariable=self.id)
+        self.inputI.place(x=340, y=310)
 
         #Creating Email label
-        labelN = Label(self.master, text="Email:", font=("serif", 16), bg="#EAF0F1")
-        labelN.place(x=340, y=360)
+        self.labelE = Label(self.master, text="Email:", font=("serif", 16), bg="#EAF0F1")
+        self.labelE.place(x=340, y=360)
 
         #Taking Email Input
         self.email = StringVar()
-        inputN = Entry(self.master,font=("Times", 16, "italic"), justify="center",width=30, textvariable=self.email)
-        inputN.place(x=340, y=390)
+        self.inputE = Entry(self.master,font=("Times", 16, "italic"), justify="center",width=30, textvariable=self.email)
+        self.inputE.place(x=340, y=390)
 
         #Creating Phone no label
-        labelN = Label(self.master, text="Mobile No:", font=("Times", 16, "italic"), bg="#EAF0F1")
-        labelN.place(x=340, y=440)
+        self.labelP = Label(self.master, text="Mobile No:", font=("Times", 16, "italic"), bg="#EAF0F1")
+        self.labelP.place(x=340, y=440)
 
         #Taking Phone no Input
         self.number = StringVar()
-        inputN = Entry(self.master,font=("baskerville", 14, "italic"), justify="center",width=30, textvariable=self.number)
-        inputN.place(x=340, y=470)
+        self.inputP = Entry(self.master,font=("baskerville", 14, "italic"), justify="center",width=30, textvariable=self.number)
+        self.inputP.place(x=340, y=470)
 
-        #Button
+        #Submit Button
         btn = Button(self.master, text="Submit", font=("serif", 10, "bold"), activebackground="#3498DB", activeforeground="#758AA2", width=10, command=self.submit)
         btn.image = image
         btn.place(x=450, y=520)
 
 
 
-
+    #checks the values and pass them for database entry quary
     def submit(self):
         if (self.name.get() == "") or (self.id.get() == "") or (self.email.get() == "") or (self.number.get() == ""):
             openl = Image.open("images/back-wr.jpg")
@@ -116,7 +116,6 @@ class Signup:
             self.imgl = Label(self.master, image=imagel, borderwidth=0, bg="#EAF0F1")
             self.imgl.image = imagel
             self.imgl.place(x=-130, y=0)
-            print("All Fields are not Covered")
         else:
             openl = Image.open("images/back-c.jpg")
             imagel = ImageTk.PhotoImage(openl)
@@ -124,8 +123,15 @@ class Signup:
             self.imgl.image = imagel
             self.imgl.place(x=-130, y=0)
             input = (self.name.get(), self.id.get(), self.email.get(), self.number.get())
+
+            #sending values to database.py
             query(input)
-            print(self.name.get() + " " + self.id.get() + self.email.get() + " " + self.number.get())
+
+            #deleting all values from entry box
+            self.inputN.delete('0', END)
+            self.inputI.delete('0', END)
+            self.inputE.delete('0', END)
+            self.inputP.delete('0', END)
 
 
 
