@@ -2,12 +2,24 @@ from tkinter import *
 import time
 from PIL import Image, ImageTk
 import os
-from database import query
+import xlsxwriter
 
 
 
 class Signup:
     def __init__(self, master):
+        #creating or loading xlx file
+        self.workbook = xlsxwriter.Workbook('buccsignup.xlsx')
+        self.worksheet = self.workbook.add_worksheet()
+        self.row = 1
+        #setting background color and text color of title
+        data_format = self.workbook.add_format({'bg_color': '#2F363F', 'font_color': 'white'})
+        self.worksheet.set_row(0, cell_format=data_format)
+        self.worksheet.write(0, 0, "Name")
+        self.worksheet.write(0, 1, "Id")
+        self.worksheet.write(0, 2, "Email")
+        self.worksheet.write(0, 3, "Number")
+
         self.master = master
         self.frame = Frame(self.master)
         self.master.title("BUCC Signup Form")
@@ -122,11 +134,12 @@ class Signup:
             self.imgl = Label(self.master, image=imagel, borderwidth=0, bg="#EAF0F1")
             self.imgl.image = imagel
             self.imgl.place(x=-130, y=0)
-            input = (self.name.get(), self.id.get(), self.email.get(), self.number.get())
-
-            #sending values to database.py
-            query(input)
-
+            #writing values into worksheet
+            self.worksheet.write(self.row, 0, self.name.get())
+            self.worksheet.write(self.row, 1, self.id.get())
+            self.worksheet.write(self.row, 2, self.email.get())
+            self.worksheet.write(self.row, 3, self.number.get())
+            self.row += 1
             #deleting all values from entry box
             self.inputN.delete('0', END)
             self.inputI.delete('0', END)
@@ -140,6 +153,7 @@ def main():
     app = Signup(root)
     root.configure(background="#EAF0F1")
     root.mainloop()
+    app.workbook.close()
 
 if __name__ == '__main__':
     main()
